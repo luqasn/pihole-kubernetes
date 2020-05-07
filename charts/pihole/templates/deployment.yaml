@@ -26,6 +26,9 @@ spec:
         checksum.config.regex: {{ include (print $.Template.BasePath "/configmap-regex.yaml") . | sha256sum | trunc 63 }}
         checksum.config.whitelist: {{ include (print $.Template.BasePath "/configmap-whitelist.yaml") . | sha256sum | trunc 63 }}
         checksum.config.dnsmasqConfig: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- if .Values.deploymentAnnotations }}
+{{ toYaml .Values.deploymentAnnotations | indent 8 }}
+        {{- end }}
       labels:
         app: {{ template "pihole.name" . }}
         release: {{ .Release.Name }}
